@@ -4440,7 +4440,7 @@ a.close.disabled {
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #000; }
+  background-color: #00000017; }
   .modal-backdrop.fade {
     opacity: 0; }
   .modal-backdrop.show {
@@ -12305,3 +12305,56 @@ a.uppy-Dashboard-poweredBy {
     font-size: 35px;
     top: -10px;
     right: -35px; } }
+
+
+
+.borderbox{
+border: solid 1px #ccc;
+    border-radius: 5px;
+    padding: 3px;
+    background: #f8f9fa;    
+}
+
+.minwidth900{
+    
+width:900px;    
+}
+
+
+.bopad {
+    padding: 5px;
+    position: relative;
+        border-bottom: solid 1px #fff;
+            margin-bottom: 5px;
+}
+
+.iconouter{
+position: absolute;
+right: 51px;
+    z-index: 1;
+}
+
+.porelative{
+position:relative;
+}
+
+.porelative .iconouter    {
+    position: absolute;
+    right: 21px;
+        z-index: 1;
+            bottom: 2px;
+    
+}
+
+.w77{
+width:77%;
+}
+
+.w33{
+width:33%;
+}
+
+.tableoverflow{
+overflow:auto;
+max-height:500px;    
+}

@@ -11,6 +11,11 @@ import Test from './Test';
 import Subsection from './Subsection';
 import Main from './Main';
 import DemoForm from './DemoForm';
+import Text from './components/Mainpages/Text';
+import Moder from './Moder';
+import Step2 from "./components/Mainpages/Forms/Step2"
+import Pagination from './components/Mainpages/Forms/Pagination/Pagination';
+import Style from './components/Mainpages/Forms/Style';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
@@ -30,9 +35,14 @@ reportWebVitals();
 
 
 
+//
+//
 
 
 
+//main parent 
+//parent of
+//string
 
 
 

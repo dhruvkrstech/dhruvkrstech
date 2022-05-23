@@ -1,59 +1,17 @@
-// import React,{useState} from 'react'
-// import Tabs from 'react-bootstrap/Tabs'
-// import Sidebar from '../Layout/Sidebar'
-// import Tab from 'react-bootstrap/Tab'
-// import Step1 from './Forms/Step1'
-// import Step2 from './Forms/Step2'
-// import Step3 from './Forms/Step3'
-// import { SvgIcon } from '@material-ui/core'
-// import GlobalContext from '../Global/GlobalContext'
-// import NoteState from "../Global/NoteState"
-// const Upload = () => {
-
-//   return (
-
-//     <div>
-//       <Sidebar/>
-
-//         <div role="main" class="main-content">
-//         <Tabs
-//   // defaultActiveKey="home"
-//   // transition={true}
-//   // id="noanim-tab-example"
-//   // className="mb-3"
-// >
-//   <Tab eventKey="home" title="Step1">
-//     <Step1 />
-//   </Tab>
-//   <Tab eventKey="profile" title="Step2">
-//     <Step2 />
-//   </Tab>
-//   <Tab eventKey="contact" title="Step3">
-//     <Step3 />
-//   </Tab>
-// </Tabs>
-//     </div>
-
-// </div>
-//   )
-// }
-
-// export default Upload
-
 import React, { useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 import { ActionMeta, OnChangeValue } from "react-select";
 import Select from "react-select";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import Sidebar from "../Layout/Sidebar";
+import Sidebar from "../../Layout/Sidebar";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import axios from "axios";
-import { Multi } from "./Forms/Multi";
+import { Multi } from "./Multi";
 import "react-tabs/style/react-tabs.css";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-const Upload = () => {
+const Step1 = () => {
   let [masterStates, setMasterStates] = useState([]);
   let [selectedState, setSelectedState] = useState([]);
   let [stateId, setSelectedStateId] = useState([]);
@@ -67,10 +25,15 @@ const Upload = () => {
   let [masterSections, setMasterSections] = useState([]);
   const [sections, setSections] = useState();
   const [selected, setSelected] = useState([]);
+
   const [secId, setSecId] = useState([]);
   const [newData, setNewData] = useState([]);
   const [Final, SetFinal] = useState([secId, newData]);
   const [doctype_id, setDoctype_id] = useState("");
+  const [testValue, setTestvalue] = useState("");
+
+  //step 2 states
+  const [subsec, SsetSubsec] = useState("");
 
   console.log(Final);
   const handleChangefordoc = (event) => {
@@ -78,13 +41,6 @@ const Upload = () => {
   };
 
   const handleChangeforselectsection = (value) => {
-    const secarray = [];
-    for (let i = 0; i < value.length; i++) {
-      secarray.push(value[i].value);
-    }
-
-    SetFinal(secarray);
-
     setSections(value);
 
     value.map((newdrop) => {
@@ -106,22 +62,38 @@ const Upload = () => {
             Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }).then(
-          (response) => {
-            let subsec = response.data
-            console.log("subsec",subsec)
+        })
+          .then((response) => {
             let test = response.data.data;
-            console.log(test);
+            setTestvalue(test);
+            console.log("testtt", test);
             setNewData([test, ...secId]);
-            console.log("setnew", setNewData);
-          },
-          (error) => {}
-        );
-
+            createNewHandle(value, test);
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              alert("name taken");
+            }
+          });
       }
     });
   };
+  const createNewHandle = (value, test) => {
+    console.log("valueee", value, "sxasdadasdaaw", test);
+    const secarray = [];
+    for (let i = 0; i < value.length; i++) {
+      if (value[i].value === value[i].label) {
+        secarray.push(test);
+      }
 
+      secarray.push(value[i].value);
+      const arr = secarray;
+
+      const onlyNumbers = arr.filter((element) => typeof element === "number");
+      console.log("onlyyyyynubers", onlyNumbers);
+      SetFinal(onlyNumbers);
+    }
+  };
   useEffect(() => {
     const selecturl =
       "http://18.232.16.231/adeptlaws/index.php/api/select-sections";
@@ -177,6 +149,7 @@ const Upload = () => {
       },
     }).then(
       (response) => {
+        // console.log(response)
         const actOptions = response.data.data.map(function (element) {
           return { value: element.id, label: element.name };
         });
@@ -184,7 +157,7 @@ const Upload = () => {
       },
       (error) => {}
     );
-  }, []);
+  }, [Final]);
 
   const statesHandler = function (selectedItems) {
     const teststate = [];
@@ -203,7 +176,6 @@ const Upload = () => {
     setAct_type_id(value.value);
   };
 
-
   //form handler
   const history = useHistory();
 
@@ -217,6 +189,7 @@ const Upload = () => {
       comments: comments,
       document_type: doctype_id,
     };
+
     console.log("payload", payload);
     let token = localStorage.getItem("token");
     const apiUrl =
@@ -246,23 +219,14 @@ const Upload = () => {
     );
 
     //step2
-
-      
   };
 
   return (
     <div>
-      <Sidebar />
+    
 
-      <div role="main" class="main-content">
-        <Tabs>
-          <TabList>
-            <Tab>Title 1</Tab>
-            <Tab>Title 2</Tab>
-            <Tab>Title 3</Tab>
-          </TabList>
-
-          <TabPanel>
+      <div role="main" >
+     
             <div>
               <form onSubmit={handleSubmitform}>
                 <div role="main">
@@ -331,6 +295,7 @@ const Upload = () => {
                                               />
                                               Section
                                             </label>
+                                            &nbsp; &nbsp; &nbsp; &nbsp;
                                             <label class="radio-inline">
                                               <input
                                                 type="radio"
@@ -340,6 +305,7 @@ const Upload = () => {
                                               />
                                               Rule
                                             </label>
+                                            &nbsp; &nbsp; &nbsp; &nbsp;
                                             <label class="radio-inline">
                                               <input
                                                 type="radio"
@@ -359,6 +325,7 @@ const Upload = () => {
                                           }
                                           options={masterSections}
                                         />
+                                       <br></br>
                                         <div class="form-group">
                                           <label for="customFile">
                                             Key Words
@@ -366,12 +333,13 @@ const Upload = () => {
                                           <div class="custom-file">
                                             <input
                                               type="text"
+                                              class="form-control"
+
                                               required
                                               onChange={(e) =>
                                                 setKeywords(e.target.value)
                                               }
                                             />
-                                            <br></br>
                                           </div>
                                         </div>
 
@@ -382,6 +350,8 @@ const Upload = () => {
                                           <div class="custom-file">
                                             <input
                                               type="text"
+                                              class="form-control"
+
                                               required
                                               onChange={(e) =>
                                                 setComments(e.target.value)
@@ -416,33 +386,14 @@ const Upload = () => {
                 </div>
               </form>
             </div>
-          </TabPanel>
-          <TabPanel>
-          <select
-  className="custom-select"
-  onChange={(e) =>{
-    const selectedsec=e.target.value;
-    SetFinal(selectedsec);
-  }}
-  >
-  <option value="steak">{Final}</option>
- 
-</select>
-            <h1>{Final}</h1>
-
-
-
-
-
-
-
-
-
-          </TabPanel>
-        </Tabs>
+        
+          <div>
+            
+            </div>
+         
       </div>
     </div>
   );
 };
 
-export default Upload;
+export default Step1;

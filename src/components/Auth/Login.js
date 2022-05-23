@@ -75,11 +75,21 @@ const Login = (props) => {
     const loginSubmit = e =>{
       
         e.preventDefault()
-        
-      axios.post('http://18.232.16.231/adeptlaws/index.php/api/admin-login', user)
-   .then(res=>{
+
+     const apiUrl = "http://18.232.16.231/adeptlaws/index.php/api/admin-login" ;
+    axios({
+      method: "POST",
+      url: apiUrl,
+      data:user,
+      headers: {
+        "Access-Control-Allow-Credentials": true,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // 'Authorization': Bearer ${localStorage.token}
+      },
+    }).then(res=>{
     if(res.status===200) {
-      window.location.href = "/app";
+      history.push("/app")
 
       localStorage.setItem('token', res.data.token)
     }
@@ -91,12 +101,13 @@ const Login = (props) => {
            .catch((error) => { 
 
             if (error.response.status === 401) {
-              console.log('Not success: ');
+              alert("Invalid Email-ID or Password");
               }  
           })
     }
 
-  
+    console.log(user)
+
 
     const myStyle={
       backgroundImage:"url(" +

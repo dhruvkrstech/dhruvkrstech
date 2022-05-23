@@ -14,44 +14,26 @@ import Nopage from "./Api/Nopage";
 import Header from "./components/Layout/Header";
 import PrivateRoute from './Api/PrivateRoute'
 // import { upload } from "@testing-library/user-event/dist/upload";
-
+import NoteState from "./components/Global/NoteState";
 const App = () => {
   return (
     <Router>
+
       <Switch>
+    
         <Route exact path="/" component={Login} />
         <PrivateRoute exact path="/app" component={Dashboard} />
 
         <PrivateRoute exact path="/upload" component={Upload} />
         <PrivateRoute exact path="/contact" component={Contact} />
         <PrivateRoute exact path="/Search_Result" component={Search_Result} />
-        <PrivateRoute exact path="/Moderation" component={Moderation} />
+        <PrivateRoute exact path="/moderation" component={Moderation} />
 
-        <Route exact path="*" component={Nopage} />
-
+        {/* <Route exact path="*" component={Nopage} /> */}
+   
       </Switch>
     </Router>
   );
 };
 
 export default App;
-
-// function App() {
-//   return (
-//     <Router>
-
-//  <Switch>
-
-// <Route path="/" element={<Login />}></Route>
-// <Route path="/app/*" element={<Sidebar />}></Route>
-// <Route path="/Upload" element={<Upload />}></Route>
-// <Route path="/Contact" element={<Contact />}></Route>
-// <Route path="/Search_Result" element={<Search_Result />}></Route>
-// <Route path="/Moderation" element={<Moderation />}></Route>
-//     </Switch>
-//         </Router>
-
-//     );
-// }
-
-// export default App;

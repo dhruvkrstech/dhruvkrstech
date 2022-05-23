@@ -12,16 +12,12 @@ function Sidebar() {
   return (
     <div>
             <Header />
-
     <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar> <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle"> <i class="fe fe-x"><span class="sr-only"></span></i> </a>
     <nav class="vertnav navbar navbar-light"> 
       
       <ul class="navbar-nav flex-fill w-100 mb-2">
         <a href="#" class="logoout"><img src="assets/images/logo.png" class="logo2"/></a>
-        <li class="nav-item dropdown"> <Link to="/app" className={({ isActive })=>
-    isActive ? 'bg-green-500' : 'bg-red-500'
-  }
-> <img src="assets/images/icon1.png" class="iconlogo"/> <span class="ml-3 item-text">Dashboard</span> </Link> </li>
+        <li class="nav-item dropdown"> <Link to="/app"> <img src="assets/images/icon1.png" class="iconlogo"/> <span class="ml-3 item-text">Dashboard</span> </Link> </li>
         <li class="nav-item dropdown"> <a href="#user" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link"> <img src="assets/images/icon2.png" class="iconlogo"/> <span class="ml-3 item-text">User</span> </a>
           <ul class="collapse list-unstyled pl-4 w-100" id="user">
             <li class="nav-item"> <Link to='#' class="nav-link pl-3"><span class="ml-1 item-text">Users</span></Link>  </li>
