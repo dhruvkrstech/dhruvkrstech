@@ -21,7 +21,8 @@ const Moderation = () => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      
+      console.log("moderation",response.data.data.data);
+
       setList(response.data.data.data);
   console.log("modera",setList)
     });

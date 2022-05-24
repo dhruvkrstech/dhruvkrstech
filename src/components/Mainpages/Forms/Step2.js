@@ -19,9 +19,10 @@ const Step2 = () => {
   const [subsection, setSubsection] = useState("");
   const [SelectSubsection, setSelectSubsection] = useState("");
   const [subsectionid, setSubsectionid] = useState(null);
- const [subsubsection,setSubsubsection] = useState();
+  const [subsubsection, setSubsubsection] = useState();
+  const [children, setChildren] = useState();
   //pagination states
-  const [data, setData] = useState([]);
+  const [data, setData] = useState("");
   const [subdata, setSubData] = useState("");
   const [present, setPresent] = useState();
 
@@ -44,7 +45,7 @@ const Step2 = () => {
         }
       )
       .then((response) => {
-        // console.log("perpage", response);
+        console.log("divjeipwvjweipjfjpje", response.data.data);
         setData(response.data.data.data);
       });
   };
@@ -74,11 +75,11 @@ const Step2 = () => {
       })
       .then(
         (response) => {
-          console.log(response);
+          console.log("ress", response.data.data.data.name);
           const suboption = response.data.data.data.map(function (element) {
             return { value: element.id, label: element.name };
           });
-          console.log("sunoptio", suboption);
+          // console.log("sunoptio", suboption);
           setSelectSubsection(suboption);
         },
         (error) => {}
@@ -97,8 +98,7 @@ const Step2 = () => {
       })
       .then((response) => {
         // console.log(response.data.data.data);
-        // console.log("subb",response.data.data.data.section_name);
-        console.log(response.data.data.data);
+        // console.log(response.data.data.data);
 
         setData(response.data.data.data);
       });
@@ -170,11 +170,8 @@ const Step2 = () => {
     );
   };
 
-
   const handleSubmitnext = (event) => {
     event.preventDefault();
-
-   
 
     let payload = {
       name: subsubsection, //string
@@ -210,31 +207,30 @@ const Step2 = () => {
   return (
     <div>
       <div role="main">
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col-12">
-                <div class="row align-items-center mb-2">
-                  <div class="col">
-                    {/* <h2 class="h5 page-title">Add Category</h2> */}
-                  </div>
-                  <div class="col-auto">
-                    {" "}
-                    <a href="#">Dashboard </a> / Step2{" "}
-                  </div>
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="row align-items-center mb-2">
+                <div class="col">
+                  {/* <h2 class="h5 page-title">Add Category</h2> */}
                 </div>
-                <div class="row">
-                  <div class="col-md-12 col-lg-12">
-                    <div class="card shadow">
-                      <div class="card-header">
-                        {" "}
-                        <strong class="card-title">Step2</strong>{" "}
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 ">
-                          <div class="">
-                            <div class="card-body">
+                <div class="col-auto">
+                  {" "}
+                  <a href="#">Dashboard </a> / Step2{" "}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12">
+                  <div class="card shadow">
+                    <div class="card-header">
+                      {" "}
+                      <strong class="card-title">Step2</strong>{" "}
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="">
+                          <div class="card-body">
                             <form onSubmit={handleSubmitform}>
-
                               <div class="col-md-6 mb-5">
                                 <div class="form-group">
                                   <label>Select Section</label>
@@ -272,91 +268,92 @@ const Step2 = () => {
                                 </div>
                                 <div class="clearfix"></div>
                               </div>
-                              </form>
+                            </form>
 
-
-
-                              <div class="">
-                                <div class="row tableoverflow">
-                                  <div class="col-md-12 ">
+                            <div class="">
+                              <div class="row tableoverflow">
+                                <div class="col-md-12 ">
+                                  <div class="">
                                     <div class="">
-                                      <div class="">
-                                        <table class="table">
-                                          <thead class="thead-dark">
-                                            <tr>
-                                              <th>Section name </th>
-                                              <th></th>
-                                              <th>&nbsp;</th>
-                                            </tr>
-                                          </thead>
-                                          {data.map((item) => (
-                                            <tbody>
-                                              <tr
-                                                class="accordion-toggle collapsed"
-                                                id="c-3599"
-                                                data-toggle="collapse"
-                                                data-parent="#c-3599"
-                                                href="#collap-3599"
-                                              >
-                                                <td class="w77">
-                                                  {item.section_name}
-                                                </td>
-                                                <td class="porelative w33">
-                                                  <div class="iconouter">
-                                                    {" "}
-                                                    {/* <Button
+                                      <table class="table">
+                                        <thead class="thead-dark">
+                                          <tr>
+                                            <th>Section name </th>
+                                            <th></th>
+                                            <th>&nbsp;</th>
+                                          </tr>
+                                        </thead>
+                                        {data.length > 0 && (
+                              <>
+                                        {data.map((item) => (
+                                          <tbody>
+                                            <tr
+                                              class="accordion-toggle collapsed"
+                                              id="c-3599"
+                                              data-toggle="collapse"
+                                              data-parent="#c-3599"
+                                              href="#collap-3599"
+                                            >
+                                              <td class="w77">
+                                                {item.section_name}
+                                              </td>
+
+                                              <td class="porelative w33">
+                                                <div class="iconouter">
+                                                  {" "}
+                                                  {/* <Button
                                                       variant="primary"
                                                       onClick={handleShow}
                                                     >
                                                       +
                                                     </Button> */}
-                                                    {/* <span
+                                                  {/* <span
                                                       class="fe fe-16 fe-edit-2 borderbox"
                                                       alt="Add Category "
                                                     ></span> */}{" "}
-                                                    <span class="fe fe-16 fe-trash-2 borderbox"></span>
-                                                  </div>
-                                                </td>
-                                                <td>&nbsp;</td>
-                                              </tr>
-                                              <tr
-                                                id="collap-3599"
-                                                class="collapse in p-3 bg-light"
-                                              >
-                                                <td colspan="3">
-                                                  <div class="subcontent">
-                                                    <ul>
-                                                      <li>
-                                                        <div class="row bopad">
-                                                          <div class="col-md-10">
-                                                            {item.name}
-                                                          </div>
-                                                          <div class="iconouter">
-                                                            {" "}
-                                                            <Button
-                                                              variant="primary"
-                                                              onClick={
-                                                                handleShow
-                                                              }
+                                                  <span class="fe fe-16 fe-trash-2 borderbox"></span>
+                                                </div>
+                                              </td>
+                                              <td>&nbsp;</td>
+                                            </tr>
+                                            <tr
+                                              id="collap-3599"
+                                              class="collapse in p-3 bg-light"
+                                            >
+                                              <td colspan="3">
+                                                <div class="subcontent">
+                                                  <ul>
+                                                    <li>
+                                                      <div class="row bopad">
+                                                        <div class="col-md-10">
+                                                          {item.name}
+                                                        </div>
+                                                        <div class="iconouter">
+                                                          {" "}
+                                                          <Button
+                                                            variant="primary"
+                                                            onClick={handleShow}
+                                                          >
+                                                            +
+                                                          </Button>
+                                                          <Modal
+                                                            show={showModal}
+                                                            onHide={handleClose}
+                                                          >
+                                                            <Modal.Header
+                                                              closeButton
                                                             >
-                                                              +
-                                                            </Button>
-                                                            <Modal
-                                                              show={showModal}
-                                                              onHide={
-                                                                handleClose
-                                                              }
-                                                            >
-                                                              <Modal.Header
-                                                                closeButton
+                                                              <Modal.Title>
+                                                                Enter
+                                                                Subsections
+                                                              </Modal.Title>
+                                                            </Modal.Header>
+                                                            <Modal.Body>
+                                                              <form
+                                                                onSubmit={
+                                                                  handleSubmitnext
+                                                                }
                                                               >
-                                                                <Modal.Title>
-                                                                  Enter
-                                                                  Subsections
-                                                                </Modal.Title>
-                                                              </Modal.Header>
-                                                              <Modal.Body>
-                                                                <form onSubmit={handleSubmitnext}>
                                                                 <Select
                                                                   placeholder="Sections"
                                                                   onChange={
@@ -382,66 +379,91 @@ const Step2 = () => {
                                                                 />
                                                                 <br></br>
                                                                 <div class="form-group">
-                                  <label>Add sub Sub section name</label>
-                                  <input
-                                    type="text"
-                                    required
-                                    class="form-control"
-                                    onChange={(e) =>
-                                      setSubsubsection(e.target.value)
-                                    }
-                                  />
-                                </div>
-                            
-                                <div class="form-group ">
-                                  <button
-                                    class="btn btn-lg btn-primary float-right mb-6"
-                                    type="submit"
-                                    name="submit"
-                                  >
-                                    Submit
-                                  </button>
-                                </div>
-                                </form>
-                                                              </Modal.Body>
-                                                              <Modal.Footer>
-                                                                <Button
-                                                                  variant="secondary"
-                                                                  onClick={
-                                                                    handleClose
-                                                                  }
-                                                                >
-                                                                  Close
-                                                                </Button>
-                                                            
-                                                              </Modal.Footer>
-                                                            </Modal>
-                                                            {/* <span
+                                                                  <label>
+                                                                    Add sub Sub
+                                                                    section name
+                                                                  </label>
+                                                                  <input
+                                                                    type="text"
+                                                                    required
+                                                                    class="form-control"
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setSubsubsection(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
+
+                                                                <div class="form-group ">
+                                                                  <button
+                                                                    class="btn btn-lg btn-primary float-right mb-6"
+                                                                    type="submit"
+                                                                    name="submit"
+                                                                  >
+                                                                    Submit
+                                                                  </button>
+                                                                  <Button
+                                                                variant="secondary"
+                                                                onClick={
+                                                                  handleClose
+                                                                }
+                                                              >
+                                                                Close
+                                                              </Button>
+                                                                </div>
+
+                                                              </form>
+                                                            </Modal.Body>
+                                                            <Modal.Footer>
+                                                         
+                                                            </Modal.Footer>
+                                                          </Modal>
+                                                          {/* <span
                                                               class="fe fe-16 fe-edit-2 borderbox"
                                                               alt="Add Category "
                                                             ></span> */}{" "}
-                                                            <span class="fe fe-16 fe-trash-2 borderbox"></span>
-                                                          </div>
+                                                         <Button
+                                                            variant="primary"
+                                                          >
+                                                            -
+                                                          </Button>
                                                         </div>
-                                                      </li>
-                                                    </ul>
-                                                  </div>
-                                                </td>
-                                              </tr>
-                                            </tbody>
-                                          ))}
-
-                                          <div className="pagination-background">
-                                            <Pagination
-                                              activePage={present}
-                                              itemsCountPerPage={""}
-                                              totalItemsCount={450}
-                                              pageRangeDisplayed={"10"}
-                                              onChange={handlePageChange}
-                                            />
-                                          </div>
-                                        </table>
-                                      </div>
+                                                      </div>
+                                                    </li>
+                                                    <li>
+                                          {item.children.map((sec, index) => {
+                                            return (
+                                              <>
+                                              {sec.name}
+                                              </>
+                                            );
+                                          })}
+                                      <>
+                                      
+                                      </>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        ))}
+   </>
+                            )}
+                                        <div className="pagination-background">
+                                          <Pagination
+                                            activePage={present}
+                                            itemsCountPerPage={""}
+                                            totalItemsCount={450}
+                                            pageRangeDisplayed={"10"}
+                                            onChange={handlePageChange}
+                                          />
+                                        </div>
+                                      </table>
                                     </div>
                                   </div>
                                 </div>
@@ -456,6 +478,7 @@ const Step2 = () => {
               </div>
             </div>
           </div>
+        </div>
 
         {/* <tbody>
           {data &&
